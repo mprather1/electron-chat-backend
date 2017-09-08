@@ -1,0 +1,30 @@
+{
+  "name": "electron-chat-backend",
+  "version": "0.0.1",
+  "description": "",
+  "main": "build/server.js",
+  "scripts": {
+    "start": "node build/server.js",
+    "dev": "NODE_ENV=development PORT=55445 TZ='America/Chicago' nodemon build/server.js",
+    "test": "PORT=8001 REDIS_STORE_URI=redis://localhost:6379 REDIS_STORE_SECRET=secret TZ='America/Chicago' NODE_ENV=test ROOT_DIR=/home/mike/Development/backbone_postgres_seed/ mocha build/test -t 10000",
+    "build": "babel -d build src",
+    "watch": "babel --watch -d build src | ts '[%Y-%m-%d %H:%M:%S]'",
+    "webpack": "NODE_ENV=development webpack --progress --watch"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "chalk": "^2.1.0",
+    "duplex-emitter": "^2.1.2",
+    "express": "^4.15.4",
+    "pg-promise": "^6.5.1",
+    "shintech-init-db": "^0.0.2",
+    "socket.io": "^2.0.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.23.0",
+    "babel-preset-es2015-node6": "^0.4.0",
+    "babel-preset-latest": "^6.22.0"
+  }
+}
