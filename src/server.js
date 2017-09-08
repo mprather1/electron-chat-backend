@@ -28,6 +28,7 @@ server.on('listening', () => {
 server.on('request', (req, res, next) => {
   console.log(req.method, req.url)
 })
+var user = ''
 
 app.route('/login')
 .post((req, res, next) => {
@@ -41,11 +42,11 @@ app.route('/login')
     db.one('SELECT username, password FROM users WHERE username = $1', body.username)
     .then(result => {
       var json = {}
-      console.log(result.password, body.password)
       if (!bcrypt.compareSync(body.password, result.password)) {
         json['message'] = 'failure'
         res.json(json)
       } else {
+        user = body.username
         res.json({
           status: 'success'
         })
@@ -62,13 +63,14 @@ app.route('/messages')
   })
 
   req.on('end', () => {
-    var retval = body
-  db.none('insert into messages( content, author )' + 'values( ${content}, ${author} )', JSON.parse(retval.toString())) // eslint-disable-line
+    var retval = JSON.parse(body.toString())
+  db.one('insert into messages( content, author )' + 'values( $1, $2 ) RETURNING author', [retval.content, user]) // eslint-disable-line
     .then(result => {
-      io.sockets.emit('message', body)
+      io.sockets.emit('message', body, result)
 
       res.json({
-        status: 'success'
+        status: 'success',
+        body: result
       })
     })
   })

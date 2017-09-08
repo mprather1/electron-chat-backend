@@ -1,6 +1,6 @@
 {
   "name": "electron-chat-backend",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "build/server.js",
   "scripts": {
@@ -16,7 +16,6 @@
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
     "chalk": "^2.1.0",
-    "duplex-emitter": "^2.1.2",
     "express": "^4.15.4",
     "pg-promise": "^6.5.1",
     "shintech-init-db": "^0.0.2",
